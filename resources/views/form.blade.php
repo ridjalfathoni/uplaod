@@ -18,14 +18,14 @@
         @csrf
           <div class="form-group">
             <label for="nama">Nama Lengkap</label>
-            <input type="nama" class="form-control" name="nama" id="nama" aria-describedby="nama" placeholder="Nama Lengkap" value="{{ $model->nama }}">
+            <input type="text" class="form-control" name="nama" id="nama" aria-describedby="nama" placeholder="Nama Lengkap" value="{{ $model->nama }}">
             @foreach($errors->get('nama') as $msg)
             <p class="text-danger">{{ $msg }}</p>
             @endforeach
           </div>
           <div class="form-group">
             <label for="tempat_lahir">Tempat Lahir</label>
-            <input type="tempat_lahir" class="form-control" name="tempat_lahir" id="tempat_lahir" aria-describedby="tempat_lahir" placeholder="Tempat Lahir" value="{{ $model->tempat_lahir }}">
+            <input type="text" class="form-control" name="tempat_lahir" id="tempat_lahir" aria-describedby="tempat_lahir" placeholder="Tempat Lahir" value="{{ $model->tempat_lahir }}">
             @foreach($errors->get('tempat_lahir') as $msg)
             <p class="text-danger">{{ $msg }}</p>
             @endforeach
@@ -51,6 +51,18 @@
                 Perempuan
               </label>
             </div>
+          </div>
+          <div class="form-group">
+            <label for="foto_profil">Foto Profil</label>
+            <input type="file" class="form-control" name="foto_profil" id="foto_profil" aria-describedby="foto_profil">
+            @foreach($errors->get('foto_profil') as $msg)
+            <p class="text-danger">{{ $msg }}</p>
+            @endforeach 
+            @if(strlen($model->foto_profil)>0)
+            <div class="col-sm-6 mx-auto" style="width: 100%; height: 100%;">
+              <img style="width: 100%;" src="{{ asset('foto/'.$model->foto_profil) }}">
+            </div>
+            @endif
           </div>
           <button type="submit" class="btn btn-primary">Add</button>
         </form>

@@ -22,6 +22,7 @@
           <thead>
             <tr>
               <th>No</th>
+              <th style="width:30%">Foto Profil</th>
               <th>Nama</th>
               <th>Jenis Kelamin</th>
               <th>Tempat, Tanggal Lahir</th>
@@ -34,6 +35,13 @@
             @php ($i++)
               <tr>
                 <td>{{$i}}</td>
+                <td>
+                    @if(strlen($value->foto_profil)>0)
+                    <div style="width: 50%; height: 100%;">
+                      <img style="width: 100%;" src="{{ asset('foto/'.$value->foto_profil) }}">
+                    </div>
+                    @endif
+                </td>
                 <td>{{ $value->nama }}</td>
                 <td>{{ $value->jenis_kelamin }}</td>
                 <td>{{ $value->tempat_lahir}}, {{ $value->tgl_lahir }}</td>

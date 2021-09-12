@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Profil;
 use Illuminate\Http\Request;
-
+use App\Http\Requests\ProfilRequest;
+use Illuminate\Support\Facades\File;
 class ProfilController extends Controller
 {
     /**
@@ -35,7 +36,7 @@ class ProfilController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ProfilRequest $request)
     {
         $model = new Profil;
         $model->nama = $request->nama;
@@ -43,6 +44,12 @@ class ProfilController extends Controller
         $model->tgl_lahir = date_format(date_create($request->tgl_lahir),"Y-m-d");
         $model->jenis_kelamin = $request->jenis_kelamin;
         
+        if($request->file('foto_profil')){
+            $file = $request->file('foto_profil');
+            $nama_file = time().str_replace(" ", "", $file->getClientOriginalName());
+            $file->move('foto', $nama_file);
+            $model->foto_profil = $nama_file;
+        }
         $model->save();
 
         return redirect('profil')->with('success', "Data berhasil disimpan");
@@ -80,7 +87,7 @@ class ProfilController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(ProfilRequest $request, $id)
     {
         $model = Profil::find($id);
         $model->nama = $request->nama;
@@ -88,6 +95,14 @@ class ProfilController extends Controller
         $model->tgl_lahir = date_format(date_create($request->tgl_lahir),"Y-m-d");;
         $model->jenis_kelamin = $request->jenis_kelamin;
         
+        if($request->file('foto_profil')){
+            $file = $request->file('foto_profil');
+            $nama_file = time().str_replace(" ", "", $file->getClientOriginalName());
+            $file->move('foto', $nama_file);
+
+            File::delete('foto/'.$model->foto_profil);
+            $model->foto_profil = $nama_file;
+        }
         $model->save();
 
         return redirect('profil')->with('success', "Data berhasil diperbaharui");

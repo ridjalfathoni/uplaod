@@ -25,8 +25,9 @@ class ProfilRequest extends FormRequest
     {
         return [
             'nama'  => 'required',
-            'tanggal_lahir' => 'required',
-            'tempat_lahir'      => 'required'
+            'tgl_lahir' => 'required',
+            'tempat_lahir' => 'required',
+            'foto_profil' => 'required'
         ];
     }
 }
